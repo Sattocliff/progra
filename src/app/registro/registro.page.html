@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registro de Usuario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="formularioRegistro">
+        <!-- Ingresar nombre completo -->
+        <ion-item>
+          <ion-label position="floating">Nombre completo</ion-label>
+          <ion-input formControlName="nombre"></ion-input>
+        </ion-item>
+        <!-- Ingresar fecha de nacimiento -->
+        <ion-item>
+          <ion-label>Fecha de Nacimiento</ion-label>
+          <ion-datetime formControlName="fechaNacimiento" display-format="DD-MM-YYYY"></ion-datetime>
+        </ion-item>
+        <!-- Ingresar rut -->
+        <ion-item>
+          <ion-label position="floating">RUT</ion-label>
+          <ion-input formControlName="rut"></ion-input>
+        </ion-item>
+        <!-- Ingresar correo -->
+        <ion-item>
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input formControlName="correo" type="email"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="formularioRegistro!.get('correo')!.hasError('email')">Correo incorrecto</ion-text>
+
+        <!-- Ingresar nombre de usuario -->
+        <ion-item>
+          <ion-label position="floating">Nombre de Usuario</ion-label>
+          <ion-input formControlName="usuario"></ion-input>
+        </ion-item>
+        <!-- Ingresar contraseña -->
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="contrasena" type="password"></ion-input>
+        </ion-item>
+        <!-- Confirmar contraseña -->
+        <ion-item>
+          <ion-label position="floating">Confirmar Contraseña</ion-label>
+          <ion-input formControlName="confirmarContrasena" type="password"></ion-input>
+        </ion-item>
+      </form>
+      <br>
+      <ion-button (click)="guardar()">Registrarse</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-footer>
+    <br>
+    <br>
+  </ion-footer>
+</ion-content>
