@@ -36,6 +36,15 @@
         </ion-item>
         <ion-text color="danger" *ngIf="formularioRegistro!.get('correo')!.hasError('email')">Correo incorrecto</ion-text>
 
+
+        <ion-item>
+          <ion-label>Selecciona Tipo de usuario</ion-label>
+          <ion-select formControlName="tipo" placeholder="Selecciona una">
+            <ion-select-option  value="1">Estudiante</ion-select-option>
+            <ion-select-option  value="2">Profesor</ion-select-option>
+          </ion-select>
+        </ion-item>
+
         <!-- Ingresar nombre de usuario -->
         <ion-item>
           <ion-label position="floating">Nombre de Usuario</ion-label>
@@ -46,6 +55,7 @@
           <ion-label position="floating">Contraseña</ion-label>
           <ion-input formControlName="contrasena" type="password"></ion-input>
         </ion-item>
+        
         <!-- Confirmar contraseña -->
         <ion-item>
           <ion-label position="floating">Confirmar Contraseña</ion-label>

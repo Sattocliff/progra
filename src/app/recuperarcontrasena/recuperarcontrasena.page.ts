@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-recuperarcontrasena',
@@ -11,53 +11,34 @@ import { Router } from '@angular/router';
 })
 export class RecuperarcontrasenaPage implements OnInit {
 
-  formularioRecuperar: FormGroup;
+  public formularioRecuperar: FormGroup;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router) {
-    this.formularioRecuperar = this.fb.group({
-      usuario: new FormControl("", Validators.required),
-      contrasena: new FormControl("", Validators.required)
-    })
-  }
-
-  
-  passwordType: string = 'password';
-  passwordIcon: string = 'eye-off';
-  password: string = '';
-
-
-  togglePasswordVisibility() {
-    if (this.passwordType === 'password') {
-      this.passwordType = 'text';
-      this.passwordIcon = 'eye';
-    } else {
-      this.passwordType = 'password';
-      this.passwordIcon = 'eye-off';
-    }
-  }
+  constructor(public fb: FormBuilder,
+    public alertController: AlertController,
+    private router: Router,
+    public navCtrl: NavController) {
+      this.formularioRecuperar = this.fb.group({
+        usuarioRecuperar: ['', Validators.required],
+        rutRecuperar: ['', Validators.required]
+      });
+     }
 
   ngOnInit() {
   }
 
-  async recuperar() {
-    var f = this.formularioRecuperar.value;
-    var datos = JSON.parse(localStorage.getItem('usuario') || '{}');
-    console.log(datos.usuario, datos.contrasena, f.usuario, f.contrasena)
+  async recuperar(){
+    let f = this.formularioRecuperar.value;
+    var ress = JSON.parse(localStorage.getItem('usuario') || '{}');
+    console.log(ress.usuario, ress.rut, f.usuarioRecuperar, f.rutRecuperar)
 
-    if (datos.usuario == f.usuario && datos.contrasena == f.contrasena) {
-      console.log("ingresado");
-      this.router.navigate(['/inicio']);
-      
-
-    } else {
+    if(ress.usuario == f.usuarioRecuperar && ress.rut == f.rutRecuperar){
+      console.log('Los datos calzan');
       const alert = await this.alertController.create({
-        header: 'Datos incorrectos',
-        message: 'Su contraseña o usuario es erronea',
+        header: 'Datos correctos',
+        message: 'Su contrase{a es: ' + ress.contrasena,
         buttons: ['Aceptar']
       })
       await alert.present();
-
     }
   }
-
 }

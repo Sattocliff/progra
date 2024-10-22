@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnimationController, IonModal } from '@ionic/angular';
 
 @Component({
@@ -10,7 +11,7 @@ import { AnimationController, IonModal } from '@ionic/angular';
 export class InicioPage implements OnInit {
   @ViewChild('modal', { static: true }) public modal: IonModal;
   
-  constructor(private animationCtrl: AnimationController) {}
+  constructor(private animationCtrl: AnimationController,private router: Router) {}
 
   ngOnInit() {
     const enterAnimation = (baseEl: HTMLElement) => {
@@ -47,5 +48,10 @@ export class InicioPage implements OnInit {
 
   closeModal() {
     this.modal.dismiss();
+  }
+  async cerrarSesion(){
+    localStorage.removeItem('Ingresado');
+    this.router.navigate(['/login']);
+
   }
 }

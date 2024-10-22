@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { RouterLink } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +11,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+  password: string = '';
   formularioLogin: FormGroup;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router, public navCtrl: NavController) {
+  constructor(
+    public fb: FormBuilder,
+    public alertController: AlertController,
+    private router: Router,
+    public navCtrl: NavController,
+    private loginService: LoginService
+  ) {
     this.formularioLogin = this.fb.group({
       usuario: new FormControl("", Validators.required),
       contrasena: new FormControl("", Validators.required)
     })
   }
-
-  
-  passwordType: string = 'password';
-  passwordIcon: string = 'eye-off';
-  password: string = '';
-
 
   togglePasswordVisibility() {
     if (this.passwordType === 'password') {
@@ -40,8 +43,26 @@ export class LoginPage implements OnInit {
   }
 
   async ingresar() {
-    var f = this.formularioLogin.value;
-    var datos = JSON.parse(localStorage.getItem('usuario') || '{}');
+    const loginData = this.formularioLogin.value;
+    this.loginService.login(loginData)
+      .subscribe(async x => {
+        if (x.datosUsuario != null) {
+          console.log(x.datosUsuario, 'usuario logueado')
+          localStorage.setItem('Ingresado','True');
+          this.navCtrl.navigateRoot('inicio');
+        } else {
+          const alert = await this.alertController.create({
+            header: 'Datos incorrectos',
+            message: 'Su contraseña o usuario es erronea',
+            buttons: ['Aceptar']
+          })
+          await alert.present();
+        }
+      });
+
+    /*var datos = JSON.parse(localStorage.getItem('usuario') || '{}');
+    
+    
     console.log(datos.usuario, datos.contrasena, f.usuario, f.contrasena)
 
     if (datos.usuario == f.usuario && datos.contrasena == f.contrasena) {
@@ -58,6 +79,6 @@ export class LoginPage implements OnInit {
       })
       await alert.present();
 
-    }
+    }*/
   }
 }
