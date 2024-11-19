@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  async ingresar() {
+  /*async ingresar() {
     const loginData = this.formularioLogin.value;
     this.loginService.login(loginData)
       .subscribe(async x => {
@@ -59,6 +59,40 @@ export class LoginPage implements OnInit {
           await alert.present();
         }
       });
+*/
+async ingresar() {
+  const loginData = this.formularioLogin.value;
+  this.loginService.login(loginData)
+    .subscribe(async x => {
+      if (x.datosUsuario != null) {
+        console.log(x.datosUsuario, 'usuario logueado');
+
+        // Guardar en localStorage
+        localStorage.setItem('Ingresado', 'True');
+        localStorage.setItem('TipoUsuario', x.datosUsuario.id_tipo); // Guarda el tipo de usuario
+
+        
+        if (x.datosUsuario.id_tipo === 1) {
+          
+          this.navCtrl.navigateRoot('inicio');
+        } else if (x.datosUsuario.id_tipo === 2) {
+          
+          this.navCtrl.navigateRoot('inicio_profesor');
+        } else {
+      
+          console.error('Tipo de usuario desconocido:', x.datosUsuario.id_tipo);
+        }
+      } else {
+      
+        const alert = await this.alertController.create({
+          header: 'Datos incorrectos',
+          message: 'Su contraseña o usuario es errónea',
+          buttons: ['Aceptar']
+        });
+        await alert.present();
+      }
+    });
+}
 
     /*var datos = JSON.parse(localStorage.getItem('usuario') || '{}');
     
@@ -81,4 +115,3 @@ export class LoginPage implements OnInit {
 
     }*/
   }
-}

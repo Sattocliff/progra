@@ -25,6 +25,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'inicio_profesor',
+    redirectTo: 'inicio_profesor',
+    pathMatch: 'full'
+  },
+  {
     path: 'recuperarcontrasena',
     redirectTo: 'recuperarcontrasena',
     pathMatch: 'full'
@@ -37,6 +42,11 @@ const routes: Routes = [
   {
     path: 'inicio',
     loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule),
+    canActivate: [IngresadoGuard]
+  },
+  {
+    path: 'inicio_profesor',
+    loadChildren: () => import('./inicio-profesor/inicio-profesor.module').then( m => m.InicioProfesorPageModule),
     canActivate: [IngresadoGuard]
   },
   {
@@ -56,6 +66,10 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'e404',
     pathMatch: 'full'
+  },
+  {
+    path: 'inicio-profesor',
+    loadChildren: () => import('./inicio-profesor/inicio-profesor.module').then( m => m.InicioProfesorPageModule)
   },
 ];
 

@@ -1,0 +1,37 @@
+<ion-app>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar color="tertiary">
+        <ion-title>Menú inicio</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      
+      <ion-menu-toggle>
+        <ion-item >Mis Datos</ion-item>
+        <ion-item>Mis clases</ion-item>
+        <ion-item>Generar código QR</ion-item>
+        <ion-item (click)="cerrarSesion()">Cerrar Sesión</ion-item>
+      </ion-menu-toggle>
+
+
+    </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Escanner</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      
+    </ion-content>
+
+    
+  </div>
+</ion-app>
+
+

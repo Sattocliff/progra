@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  public urlApi: string = "http://localhost:5000";
+  public urlApi: string = "http://192.168.1.85:5000";
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
